@@ -1,16 +1,6 @@
 import { OlympicDetail } from '@/types';
 import axios, { AxiosResponse } from 'axios';
-
-const OLYMPIC_API_BASE_URL = 'http://localhost:8080/api';
-
-const apiClient = axios.create({
-  baseURL: OLYMPIC_API_BASE_URL,
-  withCredentials: false,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-});
+import { apiClient } from './ApiService';
 
 export default {
   getOlympic(year: number): Promise<AxiosResponse<OlympicDetail[]>> {

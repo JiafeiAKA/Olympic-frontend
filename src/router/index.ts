@@ -1,12 +1,29 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
 import OylmpicMainPage from '@/components/OylmpicMainPage.vue';
+import ProfileView from '@/views/ProfileView.vue';
+import LoginComponent from '@/components/LoginComponent.vue';
+import SignUpComponent from '@/components/SignUpComponent.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
     component: OylmpicMainPage,
+  },
+  {
+    path: '/signup',
+    component: SignUpComponent,
+  },
+
+  {
+    path: '/login',
+    component: LoginComponent,
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView,
   },
   {
     path: '/about',
