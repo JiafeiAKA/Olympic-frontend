@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center border-b py-2 mx-10 justify-around">
+    <div class="flex items-center border-b py-2 mx-10 justify-around cursor-pointer" @click="getToCountryView">
 
         <div class="w-4 text-sm font-medium text-gray-900">{{ props.index + 1 }}</div>
 
@@ -39,29 +39,37 @@
                 <div class="w-[10%] px-2 text-sm">{{ detail.Silver }}</div>
                 <div class="w-8 px-2 text-sm">{{ detail.Bronze }}</div>
             </div>
-
-
-
         </div>
+
     </div>
 </template>
 
 <script setup lang="ts">
 import { CountrySportDetail, OlympicDetail } from '@/types';
 import { computed, defineProps, ref } from 'vue';
-import { NOC_NAMES, countryCodes } from '@/constants/NationName';
+import { NOC_TO_NAME, COUNTRY_TO_NOC } from '@/constants/NationName';
+import { useRouter } from 'vue-router';
+import { query } from 'express';
 
-const nocNames = NOC_NAMES;
-const codeCountry = countryCodes;
+const nocNames = NOC_TO_NAME;
+const codeCountry = COUNTRY_TO_NOC;
 
 const props = defineProps<{
     olympicsdetail: OlympicDetail
     index: number
 }>();
 
-// const details: CountrySportDetail[] = props.olympicsdetail.Sports;
-
 const isShowDetail = ref(false);
+
+const router = useRouter();
+
+const dataToCountry = {
+    noc: props.olympicsdetail.NOC
+}
+
+const getToCountryView = () => {
+    router.push({ path: '/country', query: dataToCountry });
+}
 
 
 

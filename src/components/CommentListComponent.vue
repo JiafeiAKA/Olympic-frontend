@@ -22,16 +22,23 @@
 import { apiClient } from '@/services/ApiService';
 import { loginRespone, userIdKey, usernameKey } from '@/services/AuthenticationService';
 import { CommentResponse, getCommentByCountryCode, postComment } from '@/services/CommentService';
-import { onMounted, ref } from 'vue';
+import { OlympicDetail } from '@/types';
+import { onMounted, ref, defineProps } from 'vue';
 
 
 const newComment = ref<string>(''); // State to hold the new comment
 
 const comments = ref<CommentResponse[]>([]);
 
+const props = defineProps<{
+    noc: string
+}>();
+
+
+
 const fetchComments = async () => {
     try {
-        const response = await getCommentByCountryCode('USA');
+        const response = await getCommentByCountryCode(props.noc);
         comments.value = response;
     } catch (error) {
         console.error('Error fetching comments:', error);
@@ -57,7 +64,7 @@ const submitComment = async () => {
         const userId = parseInt(localStorage.getItem(userIdKey) ?? '0', 10);
         const username = localStorage.getItem(usernameKey)
         //TODO Country Id
-        await postComment(newComment.value, 'USA', createdAt, userId ?? 0, username ?? 'Unkown');
+        await postComment(newComment.value, props.noc, createdAt, userId ?? 0, username ?? 'Unkown');
         newComment.value = ''; // Clear textarea after submitting
         await fetchComments(); // Refresh the comment list
     } catch (error) {

@@ -4,10 +4,10 @@
     <div class="container mx-auto">
         <div class="flex flex-col md:flex-row">
             <div class="left-side md:w-1/2 p-4">
-                <CountryMedal />
+                <CountryMedal :noc="noc" />
             </div>
             <div class="right-side md:w-1/2 p-4">
-                <CommentListComponent />
+                <CommentListComponent :noc="noc" />
             </div>
         </div>
     </div>
@@ -16,6 +16,12 @@
 <script setup lang="ts">
 import CommentListComponent from '@/components/CommentListComponent.vue';
 import CountryMedal from '@/components/CountryMedal.vue';
+import { OlympicDetail } from '@/types';
+import { computed, defineProps, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const noc = route.query.noc?.toString() || '';
 
 </script>
 

@@ -231,7 +231,7 @@ const NOC_REGIONS = {
   ZIM: 'Zimbabwe',
 };
 
-export const NOC_NAMES = new Map([
+export const NOC_TO_NAME = new Map([
   ['AFG', 'Afghanistan'],
   ['AHO', 'Curacao'],
   ['ALB', 'Albania'],
@@ -464,7 +464,7 @@ export const NOC_NAMES = new Map([
   ['ZIM', 'Zimbabwe'],
 ]);
 
-export const countryCodes: Map<string, string> = new Map([
+export const COUNTRY_TO_NOC: Map<string, string> = new Map([
   ['Aruba', 'ABW'],
   ['Afghanistan', 'AFG'],
   ['Angola', 'AGO'],

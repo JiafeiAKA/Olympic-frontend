@@ -17,7 +17,7 @@
     <div class="flex justify-end mt-2 mx-10">
         <label for="yearSpinner" class="mr-2">Year: </label>
         <select id="yearSpinner" v-model="selectedYear" class="border rounded px-4 py-2" @change="fetchYear">
-            <option v-for="year in yearList" :key="year" :value="year">{{ year }}</option>
+            <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
         </select>
     </div>
 
@@ -47,10 +47,10 @@ import { OlympicDetail } from '@/types';
 import { computed, onMounted, ref, watchEffect } from 'vue';
 import CardComponent from './CardComponent.vue';
 import { yearList } from '@/constants/YearList';
-import { NOC_NAMES } from '../constants/NationName';
+import { NOC_TO_NAME } from '../constants/NationName';
 
 //TODO
-const nocNames = NOC_NAMES;
+const nocNames = NOC_TO_NAME;
 
 // Pagination declare
 const itemsPerPageOptions = [5, 10, 15, 20];
