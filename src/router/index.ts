@@ -4,6 +4,7 @@ import OylmpicMainPage from '@/components/OylmpicMainPage.vue';
 import ProfileView from '@/views/ProfileView.vue';
 import LoginComponent from '@/components/LoginComponent.vue';
 import SignUpComponent from '@/components/SignUpComponent.vue';
+import CountryView from '@/views/CountryView.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -16,6 +17,10 @@ const routes: Array<RouteRecordRaw> = [
     component: SignUpComponent,
   },
 
+  {
+    path: '/country',
+    component: CountryView,
+  },
   {
     path: '/login',
     component: LoginComponent,
