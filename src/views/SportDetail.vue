@@ -4,11 +4,11 @@
     <div class="flex flex-col items-center md:flex-row m-5">
       <!-- <img src="path-to-flag-image" alt="Country Flag" class="w-32 h-auto mr-6" /> -->
       <!-- <div class="w-[250px] h-[150px] md:w-[300px] md:h-[180px] bg-black md:mr-8 flex justify-center">Flag</div> -->
-       <div class=" w-[250px] h-[150px] md:w-[300px] md:h-[180px] bg-black md:mr-8 flex justify-center">
-        <country-flag  :country="nocToname.get(nameToNOC.get(props.id) || 'USA')" size='big' class="border"/>
-   
-       </div>
-       
+      <div class=" w-[250px] h-[150px] md:w-[300px] md:h-[180px] bg-black md:mr-8 flex justify-center">
+        <country-flag :country="nocToname.get(nameToNOC.get(props.id) || 'USA')" size='big' class="border" />
+
+      </div>
+
       <div class="md:text-left mt-5 md:mt-0">
         <h1 class="text-3xl font-bold mb-5">COUNTRY NAME</h1>
         <p>Total Medal: {{ totalMedal }}</p>
@@ -50,27 +50,29 @@
     </div>
   </div>
   <hr>
-    <!-- Comments and Cheer Section -->
+  <!-- Comments and Cheer Section -->
   <div class="w-full max-w-[1000px] mx-auto p-12 bg-white">
     <div class="flex flex-col md:flex-row gap-8">
       <!-- Cheer Input Section -->
       <div class="w-full md:w-1/2">
         <h3 class="text-2xl font-semibold mb-4">CHEER YOUR ATHLETE HERE</h3>
-        <textarea v-model="newComment" placeholder="Type your comment..." class="w-full h-24 border border-gray-300 rounded p-2 mb-4"></textarea>
-        <button @click="submitComment" class="bg-[#26294D] font-cinzel font-semibold text-[#F3DA97] px-4 py-2 rounded">SUBMIT</button>
+        <textarea v-model="newComment" placeholder="Type your comment..."
+          class="w-full h-24 border border-gray-300 rounded p-2 mb-4"></textarea>
+        <button @click="submitComment"
+          class="bg-[#26294D] font-cinzel font-semibold text-[#F3DA97] px-4 py-2 rounded">SUBMIT</button>
       </div>
 
       <!-- Comments Section -->
-  <div class="w-full md:w-1/2 md:ml-10">
-    <h3 class="text-2xl font-semibold mb-4">COMMENTS</h3>
-      <ul>
-        <li v-for="(comment, index) in comments" :key="index" class="flex items-start gap-2 mb-4">
-          <div class="w-8 h-8 bg-blue-800 rounded-full flex-shrink-0"></div>
-          <div>
-            <p class="font-medium">{{ comment.username }}</p>
-            <p class="bg-yellow-100 p-2 rounded">{{ comment.commentText }}</p>
-          </div>
-        </li>
+      <div class="w-full md:w-1/2 md:ml-10">
+        <h3 class="text-2xl font-semibold mb-4">COMMENTS</h3>
+        <ul>
+          <li v-for="(comment, index) in comments" :key="index" class="flex items-start gap-2 mb-4">
+            <div class="w-8 h-8 bg-blue-800 rounded-full flex-shrink-0"></div>
+            <div>
+              <p class="font-medium">{{ comment.username }}</p>
+              <p class="bg-yellow-100 p-2 rounded">{{ comment.commentText }}</p>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
@@ -79,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted , defineProps } from 'vue';
+import { ref, onMounted, defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 import SportDetailService from '@/services/SportDetailService';
 import { yearList } from '@/constants/YearList';
@@ -98,9 +100,7 @@ const silverMedal = ref(0);
 const bronzeMedal = ref(0);
 
 const years: number[] = yearList
-    .sort((a, b) => b - a);
-
-
+  .sort((a, b) => b - a);
 
 
 const selectedYear = ref(yearList[0]);
@@ -112,78 +112,78 @@ const comments = ref<CommentResponse[]>([]);
 
 
 const props = defineProps<{
-    id: string
+  id: string
 }>();
 
 const fetchCountryMedal = async () => {
 
-  console.log("noc "+props.id);
-    try {
-        const response = await getMedalByCountryCodeAndYear(props.id, selectedYear.value);
-        medalByCountry.value = response;
+  console.log("noc " + props.id);
+  try {
+    const response = await getMedalByCountryCodeAndYear(props.id, selectedYear.value);
+    medalByCountry.value = response;
 
-        totalMedal.value = medalByCountry.value.reduce((sum, medal: { total_medals: any; }) => sum + medal.total_medals, 0);
-        goldMedal.value = medalByCountry.value.reduce((sum, medal) => sum + medal.gold, 0);
-        silverMedal.value = medalByCountry.value.reduce((sum, medal) => sum + medal.silver, 0);
-        bronzeMedal.value = medalByCountry.value.reduce((sum, medal) => sum + medal.bronze, 0);
-    } catch (error) {
-        console.error('Error fetching medalByCountry:', error);
-    }
+    totalMedal.value = medalByCountry.value.reduce((sum, medal: { total_medals: any; }) => sum + medal.total_medals, 0);
+    goldMedal.value = medalByCountry.value.reduce((sum, medal) => sum + medal.gold, 0);
+    silverMedal.value = medalByCountry.value.reduce((sum, medal) => sum + medal.silver, 0);
+    bronzeMedal.value = medalByCountry.value.reduce((sum, medal) => sum + medal.bronze, 0);
+  } catch (error) {
+    console.error('Error fetching medalByCountry:', error);
+  }
 };
 
 async function fetchYear() {
 
-    fetchCountryMedal();
+  fetchCountryMedal();
 
 }
 
 
 
 const fetchComments = async () => {
-    try {
-        const response = await getCommentByCountryCode(props.id);
-        comments.value = response;
-    } catch (error) {
-        console.error('Error fetching comments:', error);
-    }
+  try {
+    const response = await getCommentByCountryCode(props.id);
+    comments.value = response;
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+  }
 };
 
 const submitComment = async () => {
-    if (newComment.value.trim() === '') return; // Avoid submitting empty comments
-    try {
+  if (newComment.value.trim() === '') return; // Avoid submitting empty comments
+  try {
 
-        const now = new Date();
-        const createdAt = now.toISOString().slice(0, 19);
-        /**
-         *
-         *  comment: string,
-  countryCode: string,
-  createdAt: string,
-  userId: number,
-  username: string
-         *   */
+    const now = new Date();
+    const createdAt = now.toISOString().slice(0, 19);
+    /**
+     *
+     *  comment: string,
+countryCode: string,
+createdAt: string,
+userId: number,
+username: string
+     *   */
 
 
-        const userId = parseInt(localStorage.getItem(userIdKey) ?? '0', 10);
-        const username = localStorage.getItem(usernameKey)
-        //TODO Country Id
-        await postComment(newComment.value, props.id, createdAt, userId ?? 0, username ?? 'Unkown');
-        newComment.value = ''; // Clear textarea after submitting
-        await fetchComments(); // Refresh the comment list
-    } catch (error) {
-        console.error('Error submitting comment:', error);
-    }
+    const userId = parseInt(localStorage.getItem(userIdKey) ?? '0', 10);
+    const username = localStorage.getItem(usernameKey)
+    //TODO Country Id
+    await postComment(newComment.value, props.id, createdAt, userId ?? 0, username ?? 'Unkown');
+    newComment.value = ''; // Clear textarea after submitting
+    await fetchComments(); // Refresh the comment list
+  } catch (error) {
+    console.error('Error submitting comment:', error);
+  }
 };
 
 
 
 
 onMounted(() => {
-    fetchCountryMedal();
-  
+  fetchCountryMedal();
+
 });
 
-onMounted(()=>{
+onMounted(() => {
   fetchComments();
 });
 
